@@ -24,3 +24,25 @@ $BIN_DIR/mysqldump --opt -u$DB_USER -p$DB_PASS $DB_NAME | gzip > $BCK_DIR/db_$DA
 01 5 * * 0 mysql /home/mysql/backup.sh
 
 好了，每周日凌晨 5:01 系统就会自动运行 backup.sh 文件备份 MySQL 数据库了。
+
+/home/www/inc/back
+第二个！！！！
+
+#!/bin/sh   
+# File: /home/mysql/backup.sh   
+# Database info bakupmysql     
+DB_USER="user"  
+DB_PASS="password"  
+  
+# Others vars   
+DATE=`date +%Y-%m-%d`   
+mkdir /home/mysqlbak/$DATE   
+BIN_DIR="/usr/local/mysql/bin"  
+BCK_DIR="/home/mysqlbak/$DATE"  
+  
+# TODO   
+$BIN_DIR/mysqldump --opt -u$DB_USER -p$DB_PASS discuz > $BCK_DIR/discuz.sql   
+$BIN_DIR/mysqldump --opt -u$DB_USER -p$DB_PASS zjblog > $BCK_DIR/zjblog.sql   
+$BIN_DIR/mysqldump --opt -u$DB_USER -p$DB_PASS openads > $BCK_DIR/openads.sql  
+
+
