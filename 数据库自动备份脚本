@@ -1,0 +1,26 @@
+MySQL：Linux下自动备份数据库的shell脚本 Linux 服务器上的程序每天都在更新 MySQL 数据库，
+于是就想起写一个 shell 脚本，结合 crontab，定时备份数据库。
+
+其实非常简单，主要就是使用 MySQL 自带的 mysqldump 命令。
+
+脚本内容如下：
+#!/bin/sh
+# File: /home/mysql/backup.sh
+# Database info
+DB_NAME="test"
+DB_USER="username"
+DB_PASS="password"
+
+# Others vars
+BIN_DIR="/usr/local/mysql/bin"
+BCK_DIR="/home/mysql/backup"
+DATE=`date +%F`
+
+# TODO
+$BIN_DIR/mysqldump --opt -u$DB_USER -p$DB_PASS $DB_NAME | gzip > $BCK_DIR/db_$DATE.gz
+
+然后使用将此脚本加到 /etc/crontab 定时任务中：
+
+01 5 * * 0 mysql /home/mysql/backup.sh
+
+好了，每周日凌晨 5:01 系统就会自动运行 backup.sh 文件备份 MySQL 数据库了。
