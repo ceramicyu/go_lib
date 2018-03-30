@@ -1,0 +1,24 @@
+编译命令
+cd /Project/go-cpuser-worker
+export GOROOT=/usr/lib/go
+export GOPATH=/Project/go-share-library/:pwd
+CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o cpuser-worker cpuser-worker.go
+
+cd /Project/go-cpsystem-client
+export GOROOT=/usr/lib/go
+export GOPATH=/Project/go-share-library/:pwd
+CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o cpsystem-client cpsystem-client.go
+
+部署命令
+cd /Project/capistrano/
+pulsar deploy local_server newcp_worker_user
+
+pulsar deploy local_server newcp_client
+
+查看日志
+ssh local-server
+/webroot/newcp_worker_user/current
+docker-compose up -d
+docker-compose logs -f
+重启
+docker-compose down && docker-compose up -d
